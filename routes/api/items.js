@@ -1,4 +1,5 @@
 const express = require("express");
+const autheticateToken = require("../../middlewares/auth");
 
 const itemsRouter = express.Router();
 
@@ -21,13 +22,14 @@ itemsRouter.get("/", (req, res) => {
 // @acsess  Public
 itemsRouter.get("/:id", (req, res) => {
     Item.findById(req.params.id)
-    .then(item => res.json(item))
-    .catch(err => res.status(404).json({message: 'No item found.'}));
+        .then((item) => res.json(item))
+        .catch((err) => res.status(404).json({ message: "No item found." }));
 });
 
 // @route   POST api/items
 // @desc    Post a new item
-// @acsess  Public
+// @acsess  Private
+// autheticateToken
 itemsRouter.post("/", (req, res) => {
     const newItem = new Item({
         name: req.body.name,
@@ -38,7 +40,8 @@ itemsRouter.post("/", (req, res) => {
 
 // @route   DELETE api/items
 // @desc    Delete a target item
-// @acsess  Public
+// @acsess  Private
+// autheticateToken
 itemsRouter.delete("/:id", (req, res) => {
     Item.findByIdAndDelete(req.params.id)
         .then(() => {

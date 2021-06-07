@@ -1,17 +1,23 @@
-import React, { useContext, useEffect } from "react";
-import { ItemContext } from "../context/ItemContext";
+import React, { useEffect } from "react";
 import { ListGroup, ListGroupItem, Button, Container } from "reactstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import styles from "../scss/ShoppingList.module.scss";
 import "../css/fade.css";
+import { fetchItems, deleteItem } from "../reducer/ItemReducer_redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const ShoppingList = () => {
-    const { items, deleteItem, getAllItems } = useContext(ItemContext);
+    const dispatch = useDispatch();
+    const items = useSelector((state) => state.items.items);
 
     useEffect(() => {
-        getAllItems();
-    }, [])
-    
+        dispatch(fetchItems());
+    }, []);
+
+    function handleDelete(id){
+        dispatch(deleteItem(id));
+    }
+
     return (
         <Container>
             <ListGroup>
@@ -26,7 +32,7 @@ const ShoppingList = () => {
                                     color="danger"
                                     size="sm"
                                     className={styles.deleteButton}
-                                    onClick={() => deleteItem(item._id)}>
+                                    onClick={() => handleDelete(item._id)}>
                                     &times;
                                 </Button>
                                 {item.name}

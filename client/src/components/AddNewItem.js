@@ -1,16 +1,17 @@
-import React, { useState, useContext } from "react";
-import { ItemContext } from "../context/ItemContext";
+import React, { useState } from "react";
 import { Container, Button } from "reactstrap";
 import styles from "../scss/AddNewItem.module.scss";
+import {useDispatch} from 'react-redux';
+import {addItem} from '../reducer/ItemReducer_redux';
 
 const AddNewItem = () => {
-    const { addItem } = useContext(ItemContext);
+    const dispatch = useDispatch();
 
     const [newItem, setNewItem] = useState("");
 
     function handleSubmit(e) {
         e.preventDefault();
-        addItem(newItem);
+        dispatch(addItem(newItem));
         setNewItem("");
     }
 

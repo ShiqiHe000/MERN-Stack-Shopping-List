@@ -9,7 +9,7 @@ const Item = require("../../modals/Items");
 // @route   GET api/items
 // @desc    Get all items
 // @acsess  Public
-itemsRouter.get("/", (req, res) => {
+itemsRouter.get("/", autheticateToken, (req, res) => {
     Item.find()
         .sort({ date: 1 })
         .then((items) => {
@@ -29,8 +29,7 @@ itemsRouter.get("/:id", (req, res) => {
 // @route   POST api/items
 // @desc    Post a new item
 // @acsess  Private
-// autheticateToken
-itemsRouter.post("/", (req, res) => {
+itemsRouter.post("/", autheticateToken, (req, res) => {
     const newItem = new Item({
         name: req.body.name,
     });
@@ -41,8 +40,7 @@ itemsRouter.post("/", (req, res) => {
 // @route   DELETE api/items
 // @desc    Delete a target item
 // @acsess  Private
-// autheticateToken
-itemsRouter.delete("/:id", (req, res) => {
+itemsRouter.delete("/:id", autheticateToken, (req, res) => {
     Item.findByIdAndDelete(req.params.id)
         .then(() => {
             res.status(200).json({ message: "Deleted" });

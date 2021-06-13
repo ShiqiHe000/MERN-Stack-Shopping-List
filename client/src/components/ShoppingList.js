@@ -3,7 +3,7 @@ import { ListGroup, ListGroupItem, Button, Container } from "reactstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import styles from "../scss/ShoppingList.module.scss";
 import "../css/fade.css";
-import { fetchItems, deleteItem } from "../reducer/ItemReducer_redux";
+import { fetchItems, deleteItem } from "../reducer/ItemSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const ShoppingList = () => {
@@ -11,10 +11,11 @@ const ShoppingList = () => {
     const items = useSelector((state) => state.items.items);
 
     useEffect(() => {
-        dispatch(fetchItems());
-    }, []);
+        dispatch(fetchItems())
+      
+    }, [dispatch]);
 
-    function handleDelete(id){
+    function handleDelete(id) {
         dispatch(deleteItem(id));
     }
 

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Container, Button } from "reactstrap";
 import styles from "../scss/AddNewItem.module.scss";
-import {useDispatch} from 'react-redux';
-import {addItem} from '../reducer/ItemReducer_redux';
+import { useDispatch } from "react-redux";
+import { addItem } from "../reducer/ItemSlice";
 
 const AddNewItem = () => {
     const dispatch = useDispatch();
